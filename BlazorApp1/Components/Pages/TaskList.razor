@@ -1,0 +1,35 @@
+@using BlazorApp1.Components.Entity;
+@using BlazorApp1.Components.Service;
+@inject TaskService TaskService
+
+<h3>TaskList</h3>
+
+<RadzenDataGrid Data="@list" TItem="TaskItem">
+    <Columns>
+        <RadzenDataGridColumn Title="名前">
+            <Template Context="data">
+                @data.題名
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="期限">
+            <Template Context="data">
+                @data.期日
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="状態">
+            <Template Context="data">
+                @data.状態
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="内容">
+            <Template Context="data">
+                @data.内容の先頭1行
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code
+{
+
+}
