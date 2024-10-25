@@ -6,8 +6,8 @@
 
 <div class="@colorToRed">Current count: @currentCount</div>
 
-<button class="btn btn-primary" @onclick="IncrementCount">+</button>
-<button class="btn btn-primary" @onclick="DecrementCount">-</button>
+<RadzenButton Text="加算" Click="@IncrementCount"></RadzenButton>
+<RadzenButton Text="減算" Click="@DecrementCount"></RadzenButton>
 
 @code {
     private int currentCount = 0;
