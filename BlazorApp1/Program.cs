@@ -1,5 +1,6 @@
 using BlazorApp1.Components;
 using BlazorApp1.Components.Service;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddSingleton<TaskService>();
+builder.Services.AddRadzenComponents();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
