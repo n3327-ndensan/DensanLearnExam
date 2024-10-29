@@ -1,8 +1,10 @@
 @using BlazorApp1.Components.Entity;
 @using BlazorApp1.Components.Service;
 @inject TaskService TaskService
+@inject NavigationManager Navi
 
 <h3>TaskList</h3>
+<RadzenButton Text="追加" Style="width: 120px; margin: 5px" Click="@OnClickAdd"></RadzenButton>
 
 <RadzenDataGrid Data="@list" TItem="TaskItem">
     <Columns>

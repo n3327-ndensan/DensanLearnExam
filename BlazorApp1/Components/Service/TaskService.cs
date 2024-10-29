@@ -31,6 +31,13 @@ namespace BlazorApp1.Components.Service
             return list;
         }
 
+        public async Task SaveTaskAsync(TaskItem taskItem)
+        {
+            this.elements ??= await NewElements();
+            this.elements.Add(taskItem);
+            return;
+        }
+
     }
 
 }
