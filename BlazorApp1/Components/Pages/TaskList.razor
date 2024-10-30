@@ -4,7 +4,7 @@
 @inject NavigationManager Navi
 
 <h3>TaskList</h3>
-<RadzenButton Text="追加" Style="width: 120px; margin: 5px" Click="@OnClickAdd"></RadzenButton>
+<RadzenButton Text="追加" Style="width: 120px; margin: 5px" Click="@OnClickAddAsync"></RadzenButton>
 
 <RadzenDataGrid Data="@list" TItem="TaskItem">
     <Columns>
@@ -30,8 +30,3 @@
         </RadzenDataGridColumn>
     </Columns>
 </RadzenDataGrid>
-
-@code
-{
-
-}

@@ -15,13 +15,12 @@ namespace BlazorApp1.Components.Pages
             return;
         }
 
-        protected async Task OnClickAdd()
+        protected async Task OnClickAddAsync()
         {
             await Task.Run(() =>
             {
                 Navi.NavigateTo("./task-register");
             });
-
         }
 
     }

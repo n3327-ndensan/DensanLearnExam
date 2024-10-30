@@ -12,7 +12,10 @@ namespace BlazorApp1.Components.Entity
         public TaskStatus 状態 { get; set; } = TaskStatus.未着手;
         public string 内容 { get; set; } = "";
 
-
+        public TaskItem(string 題名)
+        {
+            this.題名 = 題名;
+        }
         public TaskItem(string 題名, DateTime 期限, TaskStatus 状態 = TaskStatus.未着手)
         {
             this.題名 = 題名;
@@ -27,8 +30,8 @@ namespace BlazorApp1.Components.Entity
         {
             if (other == null) return 1;
 
-            int 期限差 = this.期限.CompareTo(other.期限);
-            if(期限差 != 0) return 期限差;
+            int 期日差 = this.期日.CompareTo(other.期日);
+            if(期日差 != 0) return 期日差;
             return this.状態.CompareTo(other.状態);
         }
     }

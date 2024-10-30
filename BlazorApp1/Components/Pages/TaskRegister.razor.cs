@@ -7,7 +7,7 @@ namespace BlazorApp1.Components.Pages
     {
         private Entity.TaskItem taskItem = new TaskItem("", DateTime.Now);
         private bool isError = true;
-        private EditContext? editContext;
+        private EditContext editContext = null!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -17,31 +17,30 @@ namespace BlazorApp1.Components.Pages
         }
         private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
         {
-            editContext ??= new(taskItem);
-            isError = !editContext.Validate();
+            isError = !editContext.Validate() ;
             StateHasChanged();
         }
 
         public void Dispose()
         {
-            if (editContext != null)
-            {
-                editContext.OnFieldChanged -= HandleFieldChanged;
-            }
+            editContext.OnFieldChanged -= HandleFieldChanged;
         }
 
-        protected async Task OnSumbit()
+        protected async Task OnSumbitAsync()
         {
             await TaskService.SaveTaskAsync(taskItem);
             Navi.NavigateTo("./");
         }
 
-        protected async Task OnClickCancel()
+        protected async Task OnClickCancelAsync()
         {
-            await Task.Yield();
-            Navi.NavigateTo("./");
+            await Task.Run(() =>
+            {
+                Navi.NavigateTo("./");
+            });
         }
 
     }
+
 
 }
