@@ -1,0 +1,32 @@
+@using BlazorApp2.Components.Entity;
+@using BlazorApp2.Components.Service;
+@inject EmployeeService TaskService
+@inject NavigationManager Navi
+
+<h3>社員一覧</h3>
+<RadzenButton Text="追加" Style="width: 120px; margin: 5px" Click="@OnClickAddAsync"></RadzenButton>
+
+<RadzenDataGrid Data="@list" TItem="Employee">
+    <Columns>
+        <RadzenDataGridColumn Title="氏名">
+            <Template Context="data">
+                @data.氏名
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="雇用形態">
+            <Template Context="data">
+                @data.雇用形態
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="入社日">
+            <Template Context="data">
+                @data.入社日.ToString("yyyy-MM-dd")
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="備考">
+            <Template Context="data">
+                @data.備考の先頭1行
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>

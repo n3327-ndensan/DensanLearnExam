@@ -1,0 +1,52 @@
+@page "/employee-register"
+@using BlazorApp2.Components.Entity;
+@using BlazorApp2.Components.Service;
+@implements IDisposable
+@inject EmployeeService EmployeeService
+@inject NavigationManager Navi
+
+<h3>社員登録</h3>
+
+<EditForm EditContext="@editContext" OnValidSubmit=@OnSumbitAsync>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <table>
+        <tr>
+            <td>氏名</td>
+            <td><RadzenTextBox Style="width:372px" @bind-Value="employee.氏名" /></td>
+        </tr>
+        <tr>
+            <td>入社日</td>
+            <td><RadzenDatePicker Style="width:150px" @bind-Value="employee.入社日" DateFormat="yyyy-MM-dd" /></td>
+        </tr>
+        <tr>
+            <td>雇用形態</td>
+            <td>
+                <RadzenRadioButtonList TValue="int" Change=@(args => employee.雇用形態 = (EmployeeType)args)>
+                    <Items>
+                        @foreach (var type in Enum.GetValues(typeof(EmployeeType)))
+                        {
+                            <RadzenRadioButtonListItem Text=@type.ToString() Value=@((int) @type) />
+                        }
+                    </Items>
+                </RadzenRadioButtonList>
+            </td>
+        </tr>
+        <tr>
+            <td>備考</td>
+            <td><RadzenTextArea Style="width:372px; height:210px" @bind-Value="employee.備考"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <RadzenButton Text="Cancel" ButtonType="Radzen.ButtonType.Button"
+                              Disabled="false"
+                              Style="width: 120px"
+                              Click="@OnClickCancelAsync"/>
+                <RadzenButton Text="登録" ButtonType="Radzen.ButtonType.Submit"
+                              Disabled=@isError
+                              Style="width: 120px; float: right;"/>
+            </td>
+        </tr>
+    </table>
+</EditForm>

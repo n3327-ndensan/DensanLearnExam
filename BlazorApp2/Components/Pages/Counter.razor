@@ -1,0 +1,26 @@
+@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<div class="@colorToRed">Current count: @currentCount</div>
+
+<RadzenButton Text="加算" Click="@IncrementCount"></RadzenButton>
+<RadzenButton Text="減算" Click="@DecrementCount"></RadzenButton>
+
+@code {
+    private int currentCount = 0;
+    private string colorToRed => Enumerable.Range(1, 5).Contains(currentCount) ? "red" : "";
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    private void DecrementCount()
+    {
+        currentCount--;
+    }
+
+}
