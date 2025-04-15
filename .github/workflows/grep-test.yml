@@ -9,7 +9,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: スキャン結果の保存
-      run: grep -r "blazor" . > api_usage.txt
+      run: grep -r "blazor" . --exclude-dir={.git,.github} --exclude=api_usage.txt > api_usage.txt
 
     - name: アーティファクトのアップロード
       uses: actions/upload-artifact@v4
