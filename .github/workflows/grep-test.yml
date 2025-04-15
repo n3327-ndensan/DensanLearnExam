@@ -1,0 +1,23 @@
+name: grep-test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: チェックアウトリポジトリ
+      uses: actions/checkout@v2
+
+    - name: スキャン結果の保存
+      run: grep -r "blazor" . > api_usage.txt
+
+    - name: アーティファクトのアップロード
+      uses: actions/upload-artifact@v2
+      with:
+        name: api-usage
+        path: api_usage.txt
