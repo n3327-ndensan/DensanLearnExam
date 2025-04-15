@@ -2,17 +2,17 @@ name: grep-test
 on:
   workflow_dispatch:
 jobs:
-  scan:
-    runs-on: ubuntu-latest
-    steps:
-    - name: チェックアウトリポジトリ
-      uses: actions/checkout@v2
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: チェックアウトリポジトリ
+      uses: actions/checkout@v2
 
-    - name: スキャン結果の保存
-      run: grep -r "blazor" . > api_usage.txt
+    - name: スキャン結果の保存
+      run: grep -r "blazor" . > api_usage.txt
 
-    - name: アーティファクトのアップロード
-      uses: actions/upload-artifact@v2
-      with:
-        name: api-usage
-        path: api_usage.txt
+    - name: アーティファクトのアップロード
+      uses: actions/upload-artifact@v2
+      with:
+        name: api-usage
+        path: api_usage.txt
