@@ -2,10 +2,6 @@ name: grep-test
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'blanch'
-        required: true
-        default: 'main'
       pattern_files:
         description: 'pattern'
         required: true
