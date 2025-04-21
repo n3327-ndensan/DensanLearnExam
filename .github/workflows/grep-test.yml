@@ -23,6 +23,9 @@ jobs:
     - name: .NETCoreと.NET5以降でサポートされていないAPI
       run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt
 
+    - name: .NETにおける破壊的変更1
+      run: grep -r -f .github/workflows/pattern-net-disruptive-changes-8.0.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-net-disruptive-changes.txt
+
     - name: .NETにおける破壊的変更
       run: grep -r -f .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-net-disruptive-changes.txt
 
