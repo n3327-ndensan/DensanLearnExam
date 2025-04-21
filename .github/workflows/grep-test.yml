@@ -5,7 +5,6 @@ on:
       version:
         type: choice
         description: '.net version'
-        required: true
         default: '8.0'
         options:
           - '8.0'
@@ -22,10 +21,10 @@ jobs:
       run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-framwork-to-core.txt
 
     - name: .NETCoreと.NET5以降でサポートされていないAPI
-      run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude={grep-results-*.txt} > grep-results-unsupported-core-and-after-5.txt
+      run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt
 
     - name: .NETにおける破壊的変更
-      run: grep -r -f .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude={grep-results-*.txt} > grep-results-net-disruptive-changes.txt
+      run: grep -r -f .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-net-disruptive-changes.txt
 
     - name: アーティファクトのアップロード
       uses: actions/upload-artifact@v4
