@@ -2,13 +2,13 @@ name: grep-test
 on:
   workflow_dispatch:
     inputs:
-      pattern_files:
-        description: 'pattern'
+      version:
+        description: '.net version'
         required: true
-        type: choise
+        default: '8.0'
         options:
-          - '.net'
-          - '.net8'
+          - '8.0'
+          - '9.0'
         
 jobs:
   scan:
