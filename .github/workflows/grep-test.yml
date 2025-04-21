@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: .NETFrameworkから.NETCoreへの破壊的変更
-      run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-framwork-to-core.txt
+      run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-framwork-to-core.txt || true
 
     - name: .NETCoreと.NET5以降でサポートされていないAPI
       run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt
