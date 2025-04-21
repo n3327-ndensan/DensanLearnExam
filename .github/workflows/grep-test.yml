@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
+        type: choice
         description: '.net version'
         required: true
         default: '8.0'
