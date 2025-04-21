@@ -18,11 +18,20 @@ jobs:
     - name: チェックアウトリポジトリ
       uses: actions/checkout@v2
 
-    - name: スキャン結果の保存
-      run: grep -r "blazor" . --exclude-dir={.git,.github} --exclude=api_usage${{ github.event.inputs.version }}.txt > api_usage${{ github.event.inputs.version }}.txt
+    - name: .NETFrameworkから.NETCoreへの破壊的変更
+      run: grep -r -f pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude={grep-results-*.txt} > grep-results-framwork-to-core.txt
+
+    - name: .NETCoreと.NET5以降でサポートされていないAPI
+      run: grep -r -f pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude={grep-results-*.txt} > grep-results-unsupported-core-and-after-5.txt
+
+    - name: .NETにおける破壊的変更
+      run: grep -r -f pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude={grep-results-*.txt} > grep-results-net-disruptive-changes.txt
 
     - name: アーティファクトのアップロード
       uses: actions/upload-artifact@v4
       with:
         name: api-usage
-        path: api_usage.txt
+        path: |
+          grep-results-framwork-to-core.txt
+          grep-results-unsupported-core-and-after-5.txt
+          grep-results-net-disruptive-changes.txt
