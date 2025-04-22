@@ -20,12 +20,18 @@ jobs:
     #- name: .NETFrameworkから.NETCoreへの破壊的変更
     #  run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n > grep-results-framwork-to-core.txt || true
 
+    #- name: .NETFrameworkから.NETCoreへの破壊的変更
+    #  run: |
+    #     patterns=$(cat .github/workflows/pattern-framwork-to-core.txt)
+    #     for pattern in $patterns; do
+    #       grep -r $pattern . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n -C 2 | sed "s/^/$pattern: /" >> grep-results-framwork-to-core.txt || true
+    #     done
+
     - name: .NETFrameworkから.NETCoreへの破壊的変更
-      run: |
-         patterns=$(cat .github/workflows/pattern-framwork-to-core.txt)
-         for pattern in $patterns; do
-           grep -r $pattern . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n -C 2 | sed "s/^/$pattern: /" >> grep-results-framwork-to-core.txt || true
-         done
+      uses: ./.github/workflows/grep-by-pattern-file.yml
+      with:
+        pattern_file: .github/workflows/pattern-framwork-to-core.txt
+        result_file: .github/grep-results-framwork-to-core.txt
 
     #- name: .NETCoreと.NET5以降でサポートされていないAPI
     #  run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt || true
