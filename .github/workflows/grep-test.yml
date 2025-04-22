@@ -17,33 +17,32 @@ jobs:
     - name: チェックアウトリポジトリ
       uses: actions/checkout@v2
 
-    #- name: .NETFrameworkから.NETCoreへの破壊的変更
-    #  run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n > grep-results-framwork-to-core.txt || true
-
-    #- name: .NETFrameworkから.NETCoreへの破壊的変更
-    #  run: |
-    #     patterns=$(cat .github/workflows/pattern-framwork-to-core.txt)
-    #     for pattern in $patterns; do
-    #       grep -r $pattern . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n -C 2 | sed "s/^/$pattern: /" >> grep-results-framwork-to-core.txt || true
-    #     done
-
     - name: .NETFrameworkから.NETCoreへの破壊的変更
-      uses: ./.github/workflows/grep-by-pattern-file.yml
-      with:
-        pattern_file: .github/workflows/pattern-framwork-to-core.txt
-        result_file: .github/grep-results-framwork-to-core.txt
+      run: |
+         patterns=$(cat .github/workflows/pattern-framwork-to-core.txt)
+         for pattern in $patterns; do
+           grep -r $pattern . --exclude-dir={.git,.github} -H -n -C 2 | sed "s/^/$pattern: /" >> .github/grep-results-framwork-to-core.txt || true
+         done
 
-    #- name: .NETCoreと.NET5以降でサポートされていないAPI
-    #  run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt || true
+    - name: .NETCoreと.NET5以降でサポートされていないAPI
+      run: |
+         patterns=$(cat .github/workflows/pattern-unsupported-core-and-after-5.txt)
+         for pattern in $patterns; do
+           grep -r $pattern . --exclude-dir={.git,.github} -H -n -C 2 | sed "s/^/$pattern: /" >> .github/grep-results-unsupported-core-and-after-5.txt || true
+         done
 
-    #- name: .NETにおける破壊的変更
-    #  run: grep -r -f .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-net-disruptive-changes.txt || true
+    - name: .NETにおける破壊的変更
+      run: |
+         patterns=$(cat .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt)
+         for pattern in $patterns; do
+           grep -r $pattern . --exclude-dir={.git,.github} -H -n -C 2 | sed "s/^/$pattern: /" >> .github/grep-results-net-disruptive-changes.txt || true
+         done
 
     - name: アーティファクトのアップロード
       uses: actions/upload-artifact@v4
       with:
         name: api-usage
         path: |
-          grep-results-framwork-to-core.txt
-          #grep-results-unsupported-core-and-after-5.txt
-          #grep-results-net-disruptive-changes.txt
+          .github/grep-results-framwork-to-core.txt
+          .github/grep-results-unsupported-core-and-after-5.txt
+          .github/grep-results-net-disruptive-changes.txt
