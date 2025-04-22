@@ -17,14 +17,21 @@ jobs:
     - name: チェックアウトリポジトリ
       uses: actions/checkout@v2
 
+    #- name: .NETFrameworkから.NETCoreへの破壊的変更
+    #  run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n > grep-results-framwork-to-core.txt || true
+
     - name: .NETFrameworkから.NETCoreへの破壊的変更
-      run: grep -r -f .github/workflows/pattern-framwork-to-core.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n > grep-results-framwork-to-core.txt || true
+      run: |
+         patterns=$(cat .github/workflows/pattern-framwork-to-core.txt)
+         for pattern in $patterns; do
+           grep -r $pattern . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n -C 2 | sed 's/^/$pattern: /' >> grep-results-framwork-to-core.txt || true
+         done
 
-    - name: .NETCoreと.NET5以降でサポートされていないAPI
-      run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt || true
+    #- name: .NETCoreと.NET5以降でサポートされていないAPI
+    #  run: grep -r -f .github/workflows/pattern-unsupported-core-and-after-5.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-unsupported-core-and-after-5.txt || true
 
-    - name: .NETにおける破壊的変更
-      run: grep -r -f .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-net-disruptive-changes.txt || true
+    #- name: .NETにおける破壊的変更
+    #  run: grep -r -f .github/workflows/pattern-net-disruptive-changes-${{ github.event.inputs.version }}.txt . --exclude-dir={.git,.github} --exclude=grep-results-*.txt > grep-results-net-disruptive-changes.txt || true
 
     - name: アーティファクトのアップロード
       uses: actions/upload-artifact@v4
@@ -32,5 +39,5 @@ jobs:
         name: api-usage
         path: |
           grep-results-framwork-to-core.txt
-          grep-results-unsupported-core-and-after-5.txt
-          grep-results-net-disruptive-changes.txt
+          #grep-results-unsupported-core-and-after-5.txt
+          #grep-results-net-disruptive-changes.txt
