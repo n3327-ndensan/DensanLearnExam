@@ -24,7 +24,7 @@ jobs:
       run: |
          patterns=$(cat .github/workflows/pattern-framwork-to-core.txt)
          for pattern in $patterns; do
-           grep -r $pattern . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n -C 2 | sed 's/^/$pattern: /' >> grep-results-framwork-to-core.txt || true
+           grep -r $pattern . --exclude-dir={.git,.github} --exclude=grep-results-*.txt -H -n -C 2 | sed "s/^/$pattern: /" >> grep-results-framwork-to-core.txt || true
          done
 
     #- name: .NETCoreと.NET5以降でサポートされていないAPI
