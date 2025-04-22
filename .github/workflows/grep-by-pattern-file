@@ -1,0 +1,14 @@
+name: grep by pattern file
+
+on: workflow_call
+
+jobs:
+  search_patterns:
+    runs-on: ubuntu-latest
+    steps:
+      - name: パターン検索
+      run: |
+         patterns=$(cat ${{ input.pattern_file }})
+         for pattern in $patterns; do
+           grep -r $pattern . --exclude-dir={.git,.github} -H -n -C 2 | sed "s/^/$pattern: /" >> .github/${{ input.result_file }} || true
+         done
